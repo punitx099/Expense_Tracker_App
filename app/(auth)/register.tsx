@@ -4,6 +4,7 @@ import Input from "@/components/Input";
 import ScreenWrapper from "@/components/ScreenWrapper";
 import Typo from "@/components/Typo";
 import { colors, spacingX, spacingY } from "@/constants/theme";
+import { useAuth } from "@/contexts/authContext";
 import { verticalScale } from "@/utils/styling";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
@@ -17,16 +18,24 @@ const Register = () => {
   const nameRef = useRef("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { register: registerUser } = useAuth();
 
   const handleSubmit = async () => {
     if (!emailRef.current || !passwordRef.current || !nameRef.current) {
       Alert.alert("Sign up", "Please fill all the fields");
       return;
     }
-    console.log("email:", emailRef.current);
-    console.log("name:", nameRef.current);
-    console.log("password:", passwordRef.current);
-    console.log("good to go");
+    setIsLoading(true);
+    const res = await registerUser(
+      emailRef.current,
+      passwordRef.current,
+      nameRef.current
+    );
+    setIsLoading(false);
+    console.log("register result: ", res);
+    if (!res.success) {
+      Alert.alert("Sign up", res.msg);
+    }
   };
   return (
     <ScreenWrapper>
