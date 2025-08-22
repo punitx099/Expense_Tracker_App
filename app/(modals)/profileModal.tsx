@@ -12,6 +12,7 @@ import { UserDataType } from "@/types";
 import { scale, verticalScale } from "@/utils/styling";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
+import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
@@ -38,6 +39,19 @@ const ProfileModal = () => {
       image: user?.image || null,
     });
   }, [user]);
+
+  const onPickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      // allowsEditing: true,
+      aspect: [4, 3],
+      quality: 0.5,
+    });
+
+    if (!result.canceled) {
+      setUserData({ ...userData, image: result.assets[0] });
+    }
+  };
 
   const onSubmit = async () => {
     let { name, image } = userData;
@@ -74,7 +88,7 @@ const ProfileModal = () => {
               transition={100}
             />
 
-            <TouchableOpacity style={styles.editIcon}>
+            <TouchableOpacity onPress={onPickImage} style={styles.editIcon}>
               <Ionicons
                 name="create-sharp"
                 size={verticalScale(20)}
