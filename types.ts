@@ -9,6 +9,10 @@ import {
   ViewStyle,
 } from "react-native";
 
+import { Ionicons } from "@expo/vector-icons";
+
+export type IoniconsName = React.ComponentProps<typeof Ionicons>["name"];
+
 export type ScreenWrapperProps = {
   style?: ViewStyle;
   children: React.ReactNode;
@@ -18,6 +22,7 @@ export type ModalWrapperProps = {
   children: React.ReactNode;
   bg?: string;
 };
+
 export type accountOptionType = {
   title: string;
   icon: React.ReactNode;
@@ -77,9 +82,13 @@ export type TransactionType = {
 export type CategoryType = {
   label: string;
   value: string;
-  icon: string;
+  icon: {
+    component: typeof Ionicons; // we’re locking to Ionicons
+    name: IoniconsName; // only valid Ionicon names allowed
+  };
   bgColor: string;
 };
+
 export type ExpenseCategoriesType = {
   [key: string]: CategoryType;
 };
