@@ -3,7 +3,7 @@ import { ModalWrapperProps } from "@/types";
 import React from "react";
 import { Platform, StyleSheet, View } from "react-native";
 
-const isAndroid = Platform.OS == "android";
+const isIos = Platform.OS == "ios";
 const ModalWrapper = ({
   style,
   children,
@@ -21,7 +21,7 @@ export default ModalWrapper;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: isAndroid ? spacingY._50 : 15,
-    paddingBottom: isAndroid ? spacingY._10 : spacingY._20,
+    paddingTop: isIos ? spacingY._15 : 60,
+    paddingBottom: isIos ? spacingY._20 : spacingY._10,
   },
 });
